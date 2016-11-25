@@ -44,7 +44,7 @@ describe('notFound', () => {
 })
 
 describe('authorOrAdmin', () => {
-  let user, entity
+  let user, entity, entities
 
   beforeEach(() => {
     user = {
@@ -59,10 +59,12 @@ describe('authorOrAdmin', () => {
         }
       }
     }
+    entity.authors = [entity.author]
   })
 
   it('returns the passed entity when author is the same', () => {
     expect(response.authorOrAdmin(res, user, 'author')(entity)).toEqual(entity)
+    expect(response.authorOrAdmin(res, user, 'authors')(entity)).toEqual(entity)
   })
 
   it('returns the passed entity when author is admin', () => {

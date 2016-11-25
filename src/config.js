@@ -29,6 +29,7 @@ const config = {
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
     masterKey: requireProcessEnv('MASTER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
+    flickrKey: requireProcessEnv('FLICKR_KEY'),
     mongo: {
       options: {
         db: {

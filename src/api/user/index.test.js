@@ -17,46 +17,39 @@ beforeEach(async () => {
   adminSession = signSync(admin.id)
 })
 
-test('GET /users 200 (admin)', async () => {
+test('GET /users 200 (user)', async () => {
   const { status, body } = await request(app())
     .get('/')
-    .query({ access_token: adminSession })
+    .query({ access_token: session1 })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
 })
 
-test('GET /users?page=2&limit=1 200 (admin)', async () => {
+test('GET /users?page=2&limit=1 200 (user)', async () => {
   const { status, body } = await request(app())
     .get('/')
-    .query({ access_token: adminSession, page: 2, limit: 1 })
+    .query({ access_token: session1, page: 2, limit: 1 })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
   expect(body.length).toBe(1)
 })
 
-test('GET /users?q=user 200 (admin)', async () => {
+test('GET /users?q=user 200 (user)', async () => {
   const { status, body } = await request(app())
     .get('/')
-    .query({ access_token: adminSession, q: 'user' })
+    .query({ access_token: session1, q: 'user' })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
   expect(body.length).toBe(2)
 })
 
-test('GET /users?fields=name 200 (admin)', async () => {
+test('GET /users?fields=name 200 (user)', async () => {
   const { status, body } = await request(app())
     .get('/')
-    .query({ access_token: adminSession, fields: 'name' })
+    .query({ access_token: session1, fields: 'name' })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
   expect(Object.keys(body[0])).toEqual(['id', 'name'])
-})
-
-test('GET /users 401 (user)', async () => {
-  const { status } = await request(app())
-    .get('/')
-    .query({ access_token: session1 })
-  expect(status).toBe(401)
 })
 
 test('GET /users 401', async () => {

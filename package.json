@@ -52,6 +52,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "express-force-ssl": "^0.3.2",
+    "jimp": "^0.2.27",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.13.1",
     "mongoose": "^4.4.19",

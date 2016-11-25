@@ -13,7 +13,7 @@ const { email, password, name, picture, role } = schema.tree
  * @api {get} /users Retrieve users
  * @apiName RetrieveUsers
  * @apiGroup User
- * @apiPermission admin
+ * @apiPermission user
  * @apiParam {String} access_token User access_token.
  * @apiUse listParams
  * @apiSuccess {Object[]} users List of users.
@@ -21,7 +21,7 @@ const { email, password, name, picture, role } = schema.tree
  * @apiError 401 Admin access only.
  */
 router.get('/',
-  token({ required: true, roles: ['admin'] }),
+  token({ required: true }),
   query(),
   index)
 
