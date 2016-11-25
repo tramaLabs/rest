@@ -1,20 +1,30 @@
 import mongoose, { Schema } from 'mongoose'
+import mongooseKeywords from 'mongoose-keywords'
+import '../user'
+import '../photo'
 
 const initiativeSchema = new Schema({
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: true
-  },
   title: {
-    type: String
+    type: String,
+    required: true,
+    maxlength: 96
+  },
+  description: {
+    type: String,
+    maxlength: 2048
   },
   photo: {
-    type: String
+    type: Schema.ObjectId,
+    ref: 'Photo'
   },
-  users: {
-    type: String
-  }
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  users: [{
+    type: Schema.ObjectId,
+    ref: 'User'
+  }]
 }, {
   timestamps: true
 })
@@ -22,22 +32,25 @@ const initiativeSchema = new Schema({
 initiativeSchema.methods = {
   view (full) {
     const view = {
-      // simple view
       id: this.id,
-      user: this.user.view(full),
       title: this.title,
-      photo: this.photo,
-      users: this.users,
+      user: this.user ? this.user.view() : undefined,
+      users: this.users ? this.users.map((user) => user.view()) : undefined,
+      photo: this.photo ? this.photo.view() : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
 
     return full ? {
-      ...view
-      // add properties for a full view
+      ...view,
+      description: this.description
     } : view
   }
 }
 
-module.exports = mongoose.model('Initiative', initiativeSchema)
-export default module.exports
+initiativeSchema.plugin(mongooseKeywords, { paths: ['title'] })
+
+const model = mongoose.model('Initiative', initiativeSchema)
+
+export const schema = model.schema
+export default model

@@ -1,11 +1,19 @@
 import { Initiative } from '.'
 import { User } from '../user'
+import { Photo } from '../photo'
 
-let user, initiative
+let user, photo, initiative
 
 beforeEach(async () => {
   user = await User.create({ email: 'a@a.com', password: '123456' })
-  initiative = await Initiative.create({ user, title: 'test', photo: 'test', users: 'test' })
+  photo = await Photo.create({ title: 'test' })
+  initiative = await Initiative.create({
+    title: 'test',
+    description: 'test',
+    photo,
+    user,
+    users: [user]
+  })
 })
 
 describe('view', () => {
@@ -13,11 +21,13 @@ describe('view', () => {
     const view = initiative.view()
     expect(typeof view).toBe('object')
     expect(view.id).toBe(initiative.id)
-    expect(typeof view.user).toBe('object')
-    expect(view.user.id).toBe(user.id)
     expect(view.title).toBe(initiative.title)
-    expect(view.photo).toBe(initiative.photo)
-    expect(view.users).toBe(initiative.users)
+    expect(typeof view.photo).toBe('object')
+    expect(view.photo).toEqual(photo.view())
+    expect(typeof view.user).toBe('object')
+    expect(view.user).toEqual(user.view())
+    expect(Array.isArray(view.users)).toBe(true)
+    expect(view.users).toEqual([user.view()])
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })
@@ -26,11 +36,14 @@ describe('view', () => {
     const view = initiative.view(true)
     expect(typeof view).toBe('object')
     expect(view.id).toBe(initiative.id)
-    expect(typeof view.user).toBe('object')
-    expect(view.user.id).toBe(user.id)
     expect(view.title).toBe(initiative.title)
-    expect(view.photo).toBe(initiative.photo)
-    expect(view.users).toBe(initiative.users)
+    expect(view.description).toBe(initiative.description)
+    expect(typeof view.photo).toBe('object')
+    expect(view.photo).toEqual(photo.view())
+    expect(typeof view.user).toBe('object')
+    expect(view.user).toEqual(user.view())
+    expect(Array.isArray(view.users)).toBe(true)
+    expect(view.users).toEqual([user.view()])
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })
