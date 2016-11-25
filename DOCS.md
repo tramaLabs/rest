@@ -6,6 +6,13 @@
 	- [Authenticate](#authenticate)
 	- [Authenticate with Facebook](#authenticate-with-facebook)
 	
+- [Initiative](#initiative)
+	- [Create initiative](#create-initiative)
+	- [Delete initiative](#delete-initiative)
+	- [Retrieve initiative](#retrieve-initiative)
+	- [Retrieve initiatives](#retrieve-initiatives)
+	- [Update initiative](#update-initiative)
+	
 - [PasswordReset](#passwordreset)
 	- [Send email](#send-email)
 	- [Submit password](#submit-password)
@@ -54,6 +61,77 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>Facebook user accessToken.</p>							|
+
+# Initiative
+
+## Create initiative
+
+
+
+	POST /initiatives
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| title			| 			|  <p>Initiative's title.</p>							|
+| photo			| 			|  <p>Initiative's photo.</p>							|
+| users			| 			|  <p>Initiative's users.</p>							|
+
+## Delete initiative
+
+
+
+	DELETE /initiatives/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Retrieve initiative
+
+
+
+	GET /initiatives/:id
+
+
+## Retrieve initiatives
+
+
+
+	GET /initiatives
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update initiative
+
+
+
+	PUT /initiatives/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| title			| 			|  <p>Initiative's title.</p>							|
+| photo			| 			|  <p>Initiative's photo.</p>							|
+| users			| 			|  <p>Initiative's users.</p>							|
 
 # PasswordReset
 
