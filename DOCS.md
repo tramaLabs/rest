@@ -12,11 +12,16 @@
 	- [Retrieve initiative](#retrieve-initiative)
 	- [Retrieve initiatives](#retrieve-initiatives)
 	- [Update initiative](#update-initiative)
+	- [Update initiative&#39;s users](#update-initiative&#39;s-users)
 	
 - [PasswordReset](#passwordreset)
 	- [Send email](#send-email)
 	- [Submit password](#submit-password)
 	- [Verify token](#verify-token)
+	
+- [Photo](#photo)
+	- [Retrieve photo](#retrieve-photo)
+	- [Retrieve photos](#retrieve-photos)
 	
 - [User](#user)
 	- [Create user](#create-user)
@@ -77,8 +82,8 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
 | title			| 			|  <p>Initiative's title.</p>							|
-| photo			| 			|  <p>Initiative's photo.</p>							|
-| users			| 			|  <p>Initiative's users.</p>							|
+| photo			| 			|  <p>Initiative's photo id.</p>							|
+| description			| 			|  <p>Initiative's description.</p>							|
 
 ## Delete initiative
 
@@ -111,6 +116,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
+| user			| 			|  <p>User id(s) to filter initiatives.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -130,8 +136,23 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
 | title			| 			|  <p>Initiative's title.</p>							|
-| photo			| 			|  <p>Initiative's photo.</p>							|
-| users			| 			|  <p>Initiative's users.</p>							|
+| description			| 			|  <p>Initiative's description.</p>							|
+| photo			| 			|  <p>Initiative's photo id.</p>							|
+
+## Update initiative&#39;s users
+
+
+
+	PUT /initiatives/:id/users
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| add			| 			|  <p>User id(s) to add to the initiative's user list.</p>							|
+| remove			| 			|  <p>User id(s) to remove from the initiative's user list.</p>							|
 
 # PasswordReset
 
@@ -168,6 +189,32 @@
 
 	GET /password-resets/:token
 
+
+# Photo
+
+## Retrieve photo
+
+
+
+	GET /photos/:id
+
+
+## Retrieve photos
+
+
+
+	GET /photos
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
 
 # User
 
