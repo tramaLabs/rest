@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { middleware as query } from 'querymen'
 import { index, show } from './controller'
 export Photo, { schema } from './model'
 
@@ -14,7 +13,6 @@ const router = new Router()
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.get('/',
-  query(),
   index)
 
 /**

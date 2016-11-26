@@ -14,7 +14,7 @@ const initiativeSchema = new Schema({
     maxlength: 2048
   },
   photo: {
-    type: Schema.ObjectId,
+    type: String,
     ref: 'Photo'
   },
   user: {
