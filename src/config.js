@@ -30,6 +30,7 @@ const config = {
     masterKey: requireProcessEnv('MASTER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
     flickrKey: requireProcessEnv('FLICKR_KEY'),
+    watsonKey: requireProcessEnv('WATSON_KEY'),
     mongo: {
       options: {
         db: {
