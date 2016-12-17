@@ -1,7 +1,5 @@
 language: node_js
 node_js:
-- v4
-- v5
 - v6
 addons:
   apt:
@@ -18,3 +16,5 @@ env:
   - SENDGRID_KEY=sendgridKey
   - MASTER_KEY=masterKey
   - JWT_SECRET=jwtSecret
+  - FLICKR_KEY=flickrKey
+  - WATSON_KEY=watsonKey
