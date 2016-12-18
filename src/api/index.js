@@ -4,6 +4,7 @@ import auth from './auth'
 import passwordReset from './password-reset'
 import initiative from './initiative'
 import photo from './photo'
+import tag from './tag'
 
 const router = new Router()
 
@@ -35,5 +36,6 @@ router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/initiatives', initiative)
 router.use('/photos', photo)
+router.use('/tags', tag)
 
 export default router
