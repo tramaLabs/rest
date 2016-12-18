@@ -44,7 +44,7 @@ describe('notFound', () => {
 })
 
 describe('authorOrAdmin', () => {
-  let user, entity, entities
+  let user, entity
 
   beforeEach(() => {
     user = {

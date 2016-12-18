@@ -32,6 +32,12 @@ const config = {
     flickrKey: requireProcessEnv('FLICKR_KEY'),
     watsonKey: requireProcessEnv('WATSON_KEY'),
     fbAppSecret: requireProcessEnv('FB_APP_SECRET'),
+    AWS: {
+      accessKeyId: requireProcessEnv('AWS_ACCESS_KEY_ID'),
+      secrectAccessKey: requireProcessEnv('AWS_SECRET_ACCESS_KEY'),
+      region: 'us-east-1',
+      bucket: 'trama-photos'
+    },
     mongo: {
       options: {
         db: {
