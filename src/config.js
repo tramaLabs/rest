@@ -31,6 +31,7 @@ const config = {
     jwtSecret: requireProcessEnv('JWT_SECRET'),
     flickrKey: requireProcessEnv('FLICKR_KEY'),
     watsonKey: requireProcessEnv('WATSON_KEY'),
+    fbAppSecret: requireProcessEnv('FB_APP_SECRET'),
     mongo: {
       options: {
         db: {
@@ -40,7 +41,6 @@ const config = {
     }
   },
   test: {
-    fbAppSecret: requireProcessEnv('FB_APP_SECRET_DEV'),
     mongo: {
       uri: 'mongodb://localhost/trama-test',
       options: {
@@ -60,7 +60,6 @@ const config = {
   production: {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
-    fbAppSecret: requireProcessEnv('FB_APP_SECRET'),
     mongo: {
       uri: process.env.MONGODB_URI || 'mongodb://localhost/trama'
     }
