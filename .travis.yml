@@ -10,6 +10,8 @@ addons:
     - g++-4.8
 script:
   - npm test -- -i --coverage
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 env:
   global:
   - CXX=g++-4.8
@@ -18,3 +20,5 @@ env:
   - JWT_SECRET=jwtSecret
   - FLICKR_KEY=flickrKey
   - WATSON_KEY=watsonKey
+  - FB_APP_SECRET=fbAppSecret
+  - FB_APP_SECRET_DEV=fbAppSecretDev
