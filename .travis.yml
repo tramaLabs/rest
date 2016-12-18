@@ -15,12 +15,3 @@ after_success:
 env:
   global:
   - CXX=g++-4.8
-  - SENDGRID_KEY=sendgridKey
-  - MASTER_KEY=masterKey
-  - JWT_SECRET=jwtSecret
-  - FLICKR_KEY=flickrKey
-  - WATSON_KEY=watsonKey
-  - FB_APP_SECRET=fbAppSecret
-  - FB_APP_SECRET_DEV=fbAppSecretDev
-  - AWS_ACCESS_KEY_ID=s3AccessKeyId
-  - AWS_SECRET_ACCESS_KEY=s3SecrectAccessKey

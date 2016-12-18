@@ -4,10 +4,10 @@ import _ from 'lodash'
 
 /* istanbul ignore next */
 const requireProcessEnv = (name) => {
-  if (!process.env[name]) {
+  if (!process.env[name] && !process.env.CI) {
     throw new Error('You must set the ' + name + ' environment variable')
   }
-  return process.env[name]
+  return process.env[name] || name
 }
 
 /* istanbul ignore next */
