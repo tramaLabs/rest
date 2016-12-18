@@ -18,3 +18,4 @@ env:
   - JWT_SECRET=jwtSecret
   - FLICKR_KEY=flickrKey
   - WATSON_KEY=watsonKey
+  - FB_APP_SECRET_DEV=fbAppSecretDev
