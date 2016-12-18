@@ -16,5 +16,5 @@ it('parses facebook user', async () => {
   expect(data.id).toBe(fbUser.id)
   expect(data.name).toBe(fbUser.name)
   expect(data.email).toBe(fbUser.email)
-  expect(data.picture).toBe(fbUser.picture.data.url)
+  expect(data.picture).toBe(`https://graph.facebook.com/${fbUser.id}/picture?type=normal`)
 })
