@@ -6,7 +6,12 @@ const s3 = new S3({
   region: config.region
 })
 
-export const upload = (Body, Key, ACL = 'public-read') =>
-  s3.putObject({ Body, Key, ACL, Bucket: config.bucket })
+export const upload = (Body, Key, ContentType, ACL = 'public-read') =>
+  s3.putObject({ Body, Key, ContentType, ACL, Bucket: config.bucket })
     .promise()
     .then((data) => `https://s3.amazonaws.com/${config.bucket}/${Key}`)
+
+export const remove = (url) => {
+  const Key = url.replace(new RegExp(`^.+${config.bucket}/(.+)$`), '$1')
+  return s3.deleteObject({ Key, Bucket: config.bucket }).promise()
+}
