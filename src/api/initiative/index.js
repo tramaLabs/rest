@@ -115,6 +115,7 @@ router.put('/:id/leave',
  * @apiGroup Initiative
  * @apiPermission user
  * @apiParam {String} access_token user access token.
+ * @apiParam photo The file.
  * @apiSuccess {Object} initiative Initiative's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Initiative not found.
