@@ -1,13 +1,19 @@
+import multer from 'multer'
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, updateUsers, destroy } from './controller'
+import { create, index, show, update, join, leave, updatePhoto, destroy } from './controller'
 import { schema } from './model'
 export Initiative, { schema } from './model'
 
 const router = new Router()
-const { title, description, photo, users } = schema.tree
+const upload = multer({
+  limits: {
+    fileSize: 2 * Math.pow(1024, 2) // 2MB
+  }
+})
+const { title, slug, summary, description, tags, user, users } = schema.tree
 
 /**
  * @api {post} /initiatives Create initiative
@@ -16,16 +22,17 @@ const { title, description, photo, users } = schema.tree
  * @apiPermission user
  * @apiParam {String} access_token user access token.
  * @apiParam title Initiative's title.
- * @apiParam photo Initiative's photo id.
+ * @apiParam slug Initiative's slug.
+ * @apiParam summary Initiative's summary.
  * @apiParam description Initiative's description.
+ * @apiParam tags Initiative's tags.
  * @apiSuccess {Object} initiative Initiative's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Initiative not found.
  * @apiError 401 user access only.
  */
 router.post('/',
   token({ required: true }),
-  body({ title, description, photo }),
+  body({ title, slug, summary, description, tags }),
   create)
 
 /**
@@ -38,9 +45,7 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.get('/',
-  query({
-    user: { ...users, paths: ['users'] }
-  }),
+  query({ user, users }),
   index)
 
 /**
@@ -61,8 +66,9 @@ router.get('/:id',
  * @apiPermission user
  * @apiParam {String} access_token user access token.
  * @apiParam title Initiative's title.
+ * @apiParam summary Initiative's summary.
  * @apiParam description Initiative's description.
- * @apiParam photo Initiative's photo id.
+ * @apiParam tags Initiative's tags.
  * @apiSuccess {Object} initiative Initiative's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Initiative not found.
@@ -70,26 +76,54 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ title, description, photo }),
+  body({ title, summary, description, tags }),
   update)
 
 /**
- * @api {put} /initiatives/:id/users Update initiative's users
- * @apiName UpdateInitiativeUsers
+ * @api {put} /initiatives/:id/join Join initiative
+ * @apiName JoinInitiative
  * @apiGroup Initiative
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiParam add User id(s) to add to the initiative's user list.
- * @apiParam remove User id(s) to remove from the initiative's user list.
  * @apiSuccess {Object} initiative Initiative's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Initiative not found.
  * @apiError 401 user access only.
  */
-router.put('/:id/users',
+router.put('/:id/join',
   token({ required: true }),
-  body({ add: users, remove: users }),
-  updateUsers)
+  join)
+
+/**
+ * @api {put} /initiatives/:id/leave Leave initiative
+ * @apiName LeaveInitiative
+ * @apiGroup Initiative
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiSuccess {Object} initiative Initiative's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Initiative not found.
+ * @apiError 401 user access only.
+ */
+router.put('/:id/leave',
+  token({ required: true }),
+  leave)
+
+/**
+ * @api {put} /initiatives/:id/photo Update initiative photo
+ * @apiName UpdateInitiativePhoto
+ * @apiGroup Initiative
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiSuccess {Object} initiative Initiative's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Initiative not found.
+ * @apiError 401 user access only.
+ */
+router.put('/:id/photo',
+  token({ required: true }),
+  upload.single('photo'),
+  updatePhoto)
 
 /**
  * @api {delete} /initiatives/:id Delete initiative
