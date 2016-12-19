@@ -9,19 +9,25 @@
 - [Initiative](#initiative)
 	- [Create initiative](#create-initiative)
 	- [Delete initiative](#delete-initiative)
+	- [Join initiative](#join-initiative)
+	- [Leave initiative](#leave-initiative)
 	- [Retrieve initiative](#retrieve-initiative)
 	- [Retrieve initiatives](#retrieve-initiatives)
 	- [Update initiative](#update-initiative)
-	- [Update initiative&#39;s users](#update-initiative&#39;s-users)
+	- [Update initiative photo](#update-initiative-photo)
 	
 - [PasswordReset](#passwordreset)
 	- [Send email](#send-email)
 	- [Submit password](#submit-password)
 	- [Verify token](#verify-token)
 	
-- [Photo](#photo)
-	- [Retrieve photo](#retrieve-photo)
-	- [Retrieve photos](#retrieve-photos)
+- [Tag](#tag)
+	- [Create tag](#create-tag)
+	- [Delete tag](#delete-tag)
+	- [Extract and create tags from text](#extract-and-create-tags-from-text)
+	- [Retrieve tag](#retrieve-tag)
+	- [Retrieve tags](#retrieve-tags)
+	- [Update tag](#update-tag)
 	
 - [User](#user)
 	- [Create user](#create-user)
@@ -82,14 +88,42 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
 | title			| 			|  <p>Initiative's title.</p>							|
-| photo			| 			|  <p>Initiative's photo id.</p>							|
+| slug			| 			|  <p>Initiative's slug.</p>							|
+| summary			| 			|  <p>Initiative's summary.</p>							|
 | description			| 			|  <p>Initiative's description.</p>							|
+| tags			| 			|  <p>Initiative's tags.</p>							|
 
 ## Delete initiative
 
 
 
 	DELETE /initiatives/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Join initiative
+
+
+
+	PUT /initiatives/:id/join
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Leave initiative
+
+
+
+	PUT /initiatives/:id/leave
 
 
 ### Parameters
@@ -136,14 +170,15 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
 | title			| 			|  <p>Initiative's title.</p>							|
+| summary			| 			|  <p>Initiative's summary.</p>							|
 | description			| 			|  <p>Initiative's description.</p>							|
-| photo			| 			|  <p>Initiative's photo id.</p>							|
+| tags			| 			|  <p>Initiative's tags.</p>							|
 
-## Update initiative&#39;s users
+## Update initiative photo
 
 
 
-	PUT /initiatives/:id/users
+	PUT /initiatives/:id/photo
 
 
 ### Parameters
@@ -151,8 +186,7 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
-| add			| 			|  <p>User id(s) to add to the initiative's user list.</p>							|
-| remove			| 			|  <p>User id(s) to remove from the initiative's user list.</p>							|
+| photo			| 			|  <p>The file.</p>							|
 
 # PasswordReset
 
@@ -190,20 +224,67 @@
 	GET /password-resets/:token
 
 
-# Photo
+# Tag
 
-## Retrieve photo
-
-
-
-	GET /photos/:id
-
-
-## Retrieve photos
+## Create tag
 
 
 
-	GET /photos
+	POST /tags
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| name			| 			|  <p>Tag's name.</p>							|
+
+## Delete tag
+
+
+
+	DELETE /tags/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+
+## Extract and create tags from text
+
+
+
+	POST /tags/extract
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| text			| String			|  <p>Text.</p>							|
+
+## Retrieve tag
+
+
+
+	GET /tags/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+
+## Retrieve tags
+
+
+
+	GET /tags
 
 
 ### Parameters
@@ -215,6 +296,20 @@
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
 | sort			| String[]			| **optional** <p>Order of returned items.</p>							|
 | fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update tag
+
+
+
+	PUT /tags/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+| name			| 			|  <p>Tag's name.</p>							|
 
 # User
 

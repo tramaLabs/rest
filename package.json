@@ -60,6 +60,8 @@
     "mongoose-create-unique": "^0.4.1",
     "mongoose-keywords": "^0.3.1",
     "morgan": "^1.7.0",
+    "multer": "^1.2.1",
+    "node-summary": "^1.1.0",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
