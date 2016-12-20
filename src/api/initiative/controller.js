@@ -23,7 +23,7 @@ export const show = ({ params }, res, next) =>
   Initiative.findById(params.id)
     .populate('user users tags')
     .then(notFound(res))
-    .then((initiative) => initiative ? initiative.view() : null)
+    .then((initiative) => initiative ? initiative.view(true) : null)
     .then(success(res))
     .catch(next)
 

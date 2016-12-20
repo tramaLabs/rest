@@ -198,7 +198,7 @@ test('PUT /initiatives/:id/photo 200 (user)', async () => {
   const { status, body } = await request(app())
     .put(`/${initiative.id}/photo`)
     .query({ access_token: userSession })
-    .attach('photo', attachment)
+    .attach('data', attachment)
   expect(status).toBe(200)
   expect(typeof body).toBe('object')
   expect(body.id).toBe(initiative.id)
@@ -214,14 +214,14 @@ test('PUT /initiatives/:id/photo 401 (user) - anotherUser', async () => {
   const { status } = await request(app())
     .put(`/${initiative.id}/photo`)
     .query({ access_token: anotherSession })
-    .attach('photo', attachment)
+    .attach('data', attachment)
   expect(status).toBe(401)
 })
 
 test('PUT /initiatives/:id/photo 401', async () => {
   const { status } = await request(app())
     .put(`/${initiative.id}/photo`)
-    .attach('photo', attachment)
+    .attach('data', attachment)
   expect(status).toBe(401)
 })
 
@@ -229,7 +229,7 @@ test('PUT /initiatives/:id/photo 404 (user)', async () => {
   const { status } = await request(app())
     .put('/123456789098765432123456/photo')
     .query({ access_token: userSession })
-    .attach('photo', attachment)
+    .attach('data', attachment)
   expect(status).toBe(404)
 })
 
