@@ -133,7 +133,7 @@ test('PUT /initiatives/:id/join 200 (user)', async () => {
   expect(typeof body).toBe('object')
   expect(body.id).toBe(initiative.id)
   expect(body.users).toHaveLength(2)
-  expect(body.users[1].id).toBe(anotherUser.id)
+  expect(body.users[0].id).toBe(anotherUser.id)
 })
 
 test('PUT /initiatives/:id/join 401', async () => {

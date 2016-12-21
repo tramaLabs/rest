@@ -42,7 +42,8 @@ export const join = ({ user, params }, res, next) =>
     .then(notFound(res))
     .then((initiative) => {
       if (!initiative) return null
-      initiative.users.addToSet(user)
+      initiative.users.pull(user)
+      initiative.users.unshift(user)
       return initiative.save()
     })
     .then((initiative) => initiative ? initiative.view() : null)
