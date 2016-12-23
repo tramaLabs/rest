@@ -7,7 +7,8 @@ const tagSchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true
+    required: true,
+    lowercase: true
   },
   count: {
     type: Number,

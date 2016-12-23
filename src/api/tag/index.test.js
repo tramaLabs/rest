@@ -26,7 +26,7 @@ test('POST /tags 201 (user)', async () => {
     .send({ access_token: userSession, name: 'Test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
-  expect(body.name).toEqual('Test')
+  expect(body.name).toEqual('test')
 })
 
 test('POST /tags 401', async () => {
