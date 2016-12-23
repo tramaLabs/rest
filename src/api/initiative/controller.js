@@ -81,7 +81,7 @@ const uploadResizedPhotos = (image) => {
     small: [320, 240]
   }
   const promises = Object.keys(sizes).reduce((object, size) => {
-    object[size] = image.clone().quality(60).scaleToFit(...sizes[size]).getBuffer()
+    object[size] = image.clone().quality(80).scaleToFit(...sizes[size]).getBuffer()
     return object
   }, {})
   return Promise.props(promises).then((buffers) =>
