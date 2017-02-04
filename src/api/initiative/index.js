@@ -41,11 +41,12 @@ router.post('/',
  * @apiGroup Initiative
  * @apiUse listParams
  * @apiParam user User id(s) to filter initiatives.
+ * @apiParam featured to filter initiatives.
  * @apiSuccess {Object[]} initiatives List of initiatives.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.get('/',
-  query({ user, users }),
+  query({ featured, user, users }),
   index)
 
 /**
