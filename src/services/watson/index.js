@@ -15,4 +15,4 @@ export const getKeywords = (text) =>
   }).then((res) => {
     if (res.status !== 'OK') throw new Error(res.statusInfo)
     return _.uniq([...res.concepts, ...res.keywords].map((keyword) => keyword.text))
-  })
+  }).catch(() => [])
