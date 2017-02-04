@@ -127,7 +127,6 @@ router.put('/:id/photo',
   upload.single('data'),
   updatePhoto)
 
-
 /**
  * @api {delete} /initiatives/:id Delete initiative
  * @apiName DeleteInitiative
