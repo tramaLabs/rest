@@ -13,7 +13,7 @@ const upload = multer({
     fileSize: 2 * Math.pow(1024, 2) // 2MB
   }
 })
-const { title, slug, summary, description, tags, user, users } = schema.tree
+const { title, slug, summary, description, featured, tags, user, users } = schema.tree
 
 /**
  * @api {post} /initiatives Create initiative
@@ -76,7 +76,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ title, summary, description, tags }),
+  body({ title: {...title, required: false}, summary, description, featured, tags }),
   update)
 
 /**
@@ -125,6 +125,7 @@ router.put('/:id/photo',
   token({ required: true }),
   upload.single('data'),
   updatePhoto)
+
 
 /**
  * @api {delete} /initiatives/:id Delete initiative

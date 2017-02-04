@@ -15,6 +15,9 @@ const initiativeSchema = new Schema({
     type: String,
     set: kebabCase
   },
+  featured: {
+    type: Boolean
+  },
   summary: {
     type: String,
     maxlength: 2048
@@ -76,6 +79,7 @@ initiativeSchema.methods = {
       title: this.title,
       slug: this.slug,
       summary: this.summary,
+      featured: this.featured,
       color: this.color,
       photo: this.photo,
       tags: this.tags ? this.tags.map((tag) => tag.view()) : undefined,
