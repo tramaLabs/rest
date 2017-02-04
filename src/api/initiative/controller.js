@@ -33,6 +33,7 @@ export const update = ({ user, bodymen: { body }, params }, res, next) =>
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
     .then((initiative) => initiative ? _.merge(initiative, body).save() : null)
+    .then((initiative) => initiative ? initiative.populate('tags').execPopulate() : null)
     .then((initiative) => initiative ? initiative.view(true) : null)
     .then(success(res))
     .catch(next)
