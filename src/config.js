@@ -35,7 +35,7 @@ const config = {
       accessKeyId: requireProcessEnv('AWS_ACCESS_KEY_ID'),
       secrectAccessKey: requireProcessEnv('AWS_SECRET_ACCESS_KEY'),
       region: 'us-east-1',
-      bucket: 'trama-files'
+      bucket: 'tramafiles'
     },
     mongo: {
       options: {
