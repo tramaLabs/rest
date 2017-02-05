@@ -9,7 +9,7 @@ addons:
     - gcc-4.8
     - g++-4.8
 script:
-  - npm test -- -i --coverage
+  - npm run lint && npm test -- -i --coverage
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 env:
