@@ -4,7 +4,11 @@ import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, join, leave, updatePhoto, destroy } from './controller'
+import { create as createDemand, index as indexDemand, update as updateDemand, destroy as destroyDemand } from '../demand/controller'
+import { create as createDonor, index as indexDonor, update as updateDonor, destroy as destroyDonor } from '../donor/controller'
 import { schema } from './model'
+import { schema as demandSchema } from '../demand/model'
+import { schema as donorSchema } from '../donor/model'
 export Initiative, { schema } from './model'
 
 const router = new Router()
@@ -14,6 +18,8 @@ const upload = multer({
   }
 })
 const { title, slug, summary, description, featured, tags, user, users } = schema.tree
+const { title: demandTitle, description: demandDescription, quantity: demandQuantity, donors } = demandSchema.tree
+const { quantity: donorQuantity } = donorSchema.tree
 
 /**
  * @api {post} /initiatives Create initiative
@@ -140,5 +146,133 @@ router.put('/:id/photo',
 router.delete('/:id',
   token({ required: true }),
   destroy)
+
+// Demands endpoints
+/**
+ * @api {post} /initiatives/:id/demands Create demand
+ * @apiName CreateDemand
+ * @apiGroup Demand
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam title Demand's title.
+ * @apiParam description Demand's description.
+ * @apiParam quantity Demand's quantity.
+ * @apiParam donors Demand's donors.
+ * @apiSuccess {Object} demand Demand's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Demand not found.
+ * @apiError 401 user access only.
+ */
+router.post('/:id/demands',
+  token({ required: true }),
+  body({ title: demandTitle, description: demandDescription, quantity: demandQuantity, donors }),
+  createDemand)
+
+/**
+ * @api {get} /initiatives/:id/demands Retrieve demands
+ * @apiName RetrieveDemands
+ * @apiGroup Demand
+ * @apiUse listParams
+ * @apiSuccess {Object[]} demands List of demands.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ */
+router.get('/:id/demands',
+  query(),
+  indexDemand)
+
+/**
+ * @api {put} /initiatives/:id/demands/:id Update demand
+ * @apiName UpdateDemand
+ * @apiGroup Demand
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam title Demand's title.
+ * @apiParam description Demand's description.
+ * @apiParam quantity Demand's quantity.
+ * @apiParam donors Demand's donors.
+ * @apiSuccess {Object} demand Demand's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Demand not found.
+ * @apiError 401 user access only.
+ */
+router.put('/:id/demands/:demandId',
+  token({ required: true }),
+  body({ demandTitle, demandDescription, demandQuantity, donors }),
+  updateDemand)
+
+/**
+ * @api {delete} /initiatives/:id/demands/:id Delete demand
+ * @apiName DeleteDemand
+ * @apiGroup Demand
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiSuccess (Success 204) 204 No Content.
+ * @apiError 404 Demand not found.
+ * @apiError 401 user access only.
+ */
+router.delete('/:id/demands/:demandId',
+  token({ required: true }),
+  destroyDemand)
+
+// Demand donors endpoints
+/**
+ * @api {post} /initiatives/:id/demands/:id/donors Create donor
+ * @apiName CreateDonor
+ * @apiGroup Donor
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam quantity Donor's quantity.
+ * @apiSuccess {Object} donor Donor's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Donor not found.
+ * @apiError 401 user access only.
+ */
+router.post('/:id/demands/:demandId/donors',
+  token({ required: true }),
+  body({ donorQuantity }),
+  createDonor)
+
+/**
+ * @api {get} /initiatives/:id/demands/:id/donors Retrieve donors
+ * @apiName RetrieveDonors
+ * @apiGroup Donor
+ * @apiUse listParams
+ * @apiSuccess {Object[]} donors List of donors.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ */
+router.get('/:id/demands/:demandId/donors',
+  query(),
+  indexDonor)
+
+/**
+ * @api {put} /initiatives/:id/demands/:id/donors/:id Update donor
+ * @apiName UpdateDonor
+ * @apiGroup Donor
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam quantity Donor's quantity.
+ * @apiSuccess {Object} donor Donor's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Donor not found.
+ * @apiError 401 user access only.
+ */
+router.put('/:id/demands/:demandId/donors/:donorId',
+  token({ required: true }),
+  body({ donorQuantity }),
+  updateDonor)
+
+/**
+ * @api {delete} /initiatives/:id/demands/:id/donors/:id Delete donor
+ * @apiName DeleteDonor
+ * @apiGroup Donor
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiSuccess (Success 204) 204 No Content.
+ * @apiError 404 Donor not found.
+ * @apiError 401 user access only.
+ */
+router.delete('/:id/demands/:demandId/donors/:donorId',
+  token({ required: true }),
+  destroyDonor)
 
 export default router
