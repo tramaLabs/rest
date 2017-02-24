@@ -229,7 +229,7 @@ router.delete('/:id/demands/:demandId',
  */
 router.post('/:id/demands/:demandId/donors',
   token({ required: true }),
-  body({ donorQuantity }),
+  body({ quantity: donorQuantity }),
   createDonor)
 
 /**
@@ -258,7 +258,7 @@ router.get('/:id/demands/:demandId/donors',
  */
 router.put('/:id/demands/:demandId/donors/:donorId',
   token({ required: true }),
-  body({ donorQuantity }),
+  body({ quantity: donorQuantity }),
   updateDonor)
 
 /**

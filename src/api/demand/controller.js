@@ -14,7 +14,7 @@ export const create = ({ params, user, bodymen: { body } }, res, next) => {
       return initiative.save()
     })
   })
-    .then((initiative) => initiative ? initiative.view(true) : null)
+    .then((initiative) => initiative ? initiative.view(true).demands : null)
     .then(success(res, 201))
     .catch(next)
 }
