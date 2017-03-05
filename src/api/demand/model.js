@@ -32,7 +32,7 @@ demandSchema.methods = {
       title: this.title,
       description: this.description,
       quantity: this.quantity,
-      donors: this.donors ? this.donors.map((donor) => donor.view()) : undefined,
+      donors: this.donors ? this.donors.map((donor) => donor.view(true)) : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }

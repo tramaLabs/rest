@@ -21,14 +21,14 @@ export const create = ({ params, user, bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Demand.find(query, select, cursor)
-    .populate('creator')
+    .populate('creator donors donors.user')
     .then((demands) => demands.map((demand) => demand.view(true)))
     .then(success(res))
     .catch(next)
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
   Demand.findById(params.demandId)
-    .populate('creator')
+    .populate('creator donors donors.user')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'creator'))
     .then((demand) => demand ? _.merge(demand, body).save() : null)
