@@ -6,11 +6,17 @@ import * as s3 from '../../services/s3'
 import Image from '../../services/image'
 import { Initiative } from '.'
 
-export const create = ({ user, bodymen: { body } }, res, next) =>
-  Initiative.create({ ...body, user })
+export const create = ({ user, bodymen: { body } }, res, next) => {
+  let promise = Promise.resolve()
+  if (body.tags && body.tags.length > 0) {
+    promise = Initiative.populate(body, {path: 'tags'})
+  }
+
+  promise.then(() => Initiative.create({ ...body, user }))
     .then((initiative) => initiative.view(true))
     .then(success(res, 201))
     .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Initiative.find(query, select, cursor)
