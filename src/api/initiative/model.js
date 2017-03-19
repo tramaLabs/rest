@@ -6,7 +6,7 @@ import '../user'
 import '../tag'
 import '../demand'
 
-var deepPopulate = require('mongoose-deep-populate')(mongoose)
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const initiativeSchema = new Schema({
   title: {
@@ -105,7 +105,7 @@ initiativeSchema.methods = {
 }
 
 initiativeSchema.plugin(mongooseKeywords, { paths: ['title', 'tags'] })
-initiativeSchema.plugin(deepPopulate, {})
+initiativeSchema.plugin(deepPopulate)
 
 const model = mongoose.model('Initiative', initiativeSchema)
 

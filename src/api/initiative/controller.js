@@ -21,8 +21,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 
 export const show = ({ params }, res, next) =>
   Initiative.findById(params.id)
-    .populate('user users tags demands')
-    .deepPopulate('demands.donors.user')
+    .deepPopulate('user users tags demands demands.donors.user')
     .then(notFound(res))
     .then((initiative) => initiative ? initiative.view(true) : null)
     .then(success(res))

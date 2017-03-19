@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const demandSchema = new Schema({
   creator: {
@@ -45,6 +46,7 @@ demandSchema.methods = {
 }
 
 const model = mongoose.model('Demand', demandSchema)
+demandSchema.plugin(deepPopulate)
 
 export const schema = model.schema
 export default model

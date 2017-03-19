@@ -15,21 +15,21 @@ export const create = ({ params, user, bodymen: { body } }, res, next) => {
     })
   })
     .then((initiative) => initiative ? initiative.populate('demands').execPopulate() : null)
-    .then((initiative) => initiative ? initiative.view(true).demands : null)
+    .then((initiative) => initiative ? initiative.view(true) : null)
     .then(success(res, 201))
     .catch(next)
 }
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Demand.find(query, select, cursor)
-    .populate('creator donors donors.user')
+    .populate('creator donors')
     .then((demands) => demands.map((demand) => demand.view(true)))
     .then(success(res))
     .catch(next)
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
   Demand.findById(params.demandId)
-    .populate('creator donors donors.user')
+    .populate('creator donors')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'creator'))
     .then((demand) => demand ? _.merge(demand, body).save() : null)
