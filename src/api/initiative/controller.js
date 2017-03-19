@@ -20,14 +20,14 @@ export const create = ({ user, bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Initiative.find(query, select, cursor)
-    .populate('user users tags')
-    .then((initiatives) => initiatives.map((initiative) => initiative.view()))
+    .populate('user users tags demands')
+    .then((initiatives) => initiatives.map((initiative) => initiative.view(true)))
     .then(success(res))
     .catch(next)
 
 export const show = ({ params }, res, next) =>
   Initiative.findById(params.id)
-    .populate('user users tags')
+    .deepPopulate('user users tags demands demands.donors.user')
     .then(notFound(res))
     .then((initiative) => initiative ? initiative.view(true) : null)
     .then(success(res))
@@ -35,7 +35,7 @@ export const show = ({ params }, res, next) =>
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
   Initiative.findById(params.id)
-    .populate('user users tags')
+    .populate('user users tags demands demands.donors')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
     .then((initiative) => initiative ? _.merge(initiative, body).save() : null)
