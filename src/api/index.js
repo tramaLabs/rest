@@ -4,7 +4,6 @@ import auth from './auth'
 import passwordReset from './password-reset'
 import initiative from './initiative'
 import tag from './tag'
-import demand from './demand'
 
 const router = new Router()
 
