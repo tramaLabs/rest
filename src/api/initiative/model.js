@@ -4,6 +4,9 @@ import summary from 'node-summary'
 import { kebabCase } from 'lodash'
 import '../user'
 import '../tag'
+import '../demand'
+
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 
 const initiativeSchema = new Schema({
   title: {
@@ -37,6 +40,10 @@ const initiativeSchema = new Schema({
   tags: [{
     type: Schema.ObjectId,
     ref: 'Tag'
+  }],
+  demands: [{
+    type: Schema.ObjectId,
+    ref: 'Demand'
   }],
   user: {
     type: Schema.ObjectId,
@@ -83,6 +90,7 @@ initiativeSchema.methods = {
       color: this.color,
       photo: this.photo,
       tags: this.tags ? this.tags.map((tag) => tag.view()) : undefined,
+      demands: this.demands ? this.demands.map((demand) => demand.view(true)) : undefined,
       user: this.user ? this.user.view() : undefined,
       users: this.users ? this.users.map((user) => user.view()) : undefined,
       createdAt: this.createdAt,
@@ -97,6 +105,7 @@ initiativeSchema.methods = {
 }
 
 initiativeSchema.plugin(mongooseKeywords, { paths: ['title', 'tags'] })
+initiativeSchema.plugin(deepPopulate)
 
 const model = mongoose.model('Initiative', initiativeSchema)
 
