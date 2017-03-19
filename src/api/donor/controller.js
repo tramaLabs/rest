@@ -5,6 +5,7 @@ import { Demand } from '../demand'
 
 export const create = ({ params, user, bodymen: { body } }, res, next) => {
   Demand.findById(params.demandId)
+  .deepPopulate('donors.user')
   .then(notFound(res))
   .then((demand) => {
     if (!demand) return null
@@ -14,14 +15,20 @@ export const create = ({ params, user, bodymen: { body } }, res, next) => {
       return demand.save()
     })
   })
-    .then((demand) => demand ? demand.view(true).donors : null)
+    .then((demand) => demand ? demand.populate('donors').execPopulate() : null)
+    .then((demand) => demand ? demand.view(true) : null)
     .then(success(res, 201))
     .catch(next)
 }
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  Donor.find(query, select, cursor)
-    .populate('user')
+export const index = ({ params, querymen: { query, select, cursor } }, res, next) =>
+  Demand.findById(params.demandId)
+  .deepPopulate('donors donors.user')
+  .then(notFound(res))
+  .then((demand) => {
+    if (!demand) return null
+    return demand.donors
+  })
     .then((donors) => donors.map((donor) => donor.view()))
     .then(success(res))
     .catch(next)
